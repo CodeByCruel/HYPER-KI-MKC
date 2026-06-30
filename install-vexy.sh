@@ -181,16 +181,28 @@ server {
         return 200 '{"license":{"tier":"ultimate","status":"valid","community":false,"edition":"ultimate","features":{"ultimate_features":true,"premium_features":true,"basic_features":true,"minecraft_features":true,"fivem_features":true,"essentials_features":true,"special_features":true,"private_features":true,"ark_features":true,"hytale_features":true}},"sso_connected":true,"sso":true,"dgen_connected":true,"discord_connected":true,"panel_url":"http://$SERVER_NAME","branding":{"site_name":"Avtix Game Panel"}}';
     }
 
-    # ═══ ADDON SETTINGS INTERCEPT ═══
+    # ═══ ADDON SETTINGS INTERCEPTS (SPA calls /api/client/addons when logged in) ═══
+    location = /api/client/addons {
+        default_type application/json;
+        return 200 '{"addons":{"UserRegister":{"enabled":true},"database-manager":{"enabled":true},"Notifications":{"enabled":true},"SubdomainManager":{"enabled":true},"staff-request":{"enabled":true},"server-importer":{"enabled":true},"custom-mod-manager":{"enabled":true},"github-source-control":{"enabled":true},"server-splitter":{"enabled":true},"server-type-changer":{"enabled":true},"startup-presets":{"enabled":true},"schedule-presets":{"enabled":true},"AccountInfoUpdate":{"enabled":true},"CloudflareTurnstile":{"enabled":false},"upload-from-url":{"enabled":true},"console-log-upload":{"enabled":true},"command-history":{"enabled":true}},"updated_at":null,"app_url":"http://$SERVER_NAME"}';
+    }
     location = /api/client/theme/hyperv2/addon-settings {
         default_type application/json;
-        return 200 '{"addons":{"database_manager":{"enabled":true},"subdomain_manager":{"enabled":true},"server_splitter":{"enabled":true},"server_importer":{"enabled":true},"mod_manager":{"enabled":true},"github_source_control":{"enabled":true},"console_log_upload":{"enabled":true},"command_history":{"enabled":true},"recycler":{"enabled":true},"wiper":{"enabled":true},"user_register":{"enabled":true},"five_m":{"enabled":true},"arma_reforger":{"enabled":true},"minecraft_modpacks":{"enabled":true}},"theme":{"site_name":"Avtix Game Panel","accent_color":"#6366f1"}}';
+        return 200 '{"addons":{"UserRegister":{"enabled":true},"database-manager":{"enabled":true},"Notifications":{"enabled":true},"SubdomainManager":{"enabled":true},"staff-request":{"enabled":true},"server-importer":{"enabled":true},"custom-mod-manager":{"enabled":true},"github-source-control":{"enabled":true},"server-splitter":{"enabled":true},"server-type-changer":{"enabled":true},"startup-presets":{"enabled":true},"schedule-presets":{"enabled":true},"AccountInfoUpdate":{"enabled":true},"CloudflareTurnstile":{"enabled":false},"upload-from-url":{"enabled":true},"console-log-upload":{"enabled":true},"command-history":{"enabled":true}},"updated_at":null,"app_url":"http://$SERVER_NAME"}';
     }
 
-    # ═══ THEME INFO INTERCEPT ═══
+    # ═══ THEME INFO INTERCEPTS ═══
+    location = /api/client/theme/hyperv2 {
+        default_type application/json;
+        return 200 '{"theme":{"name":"hyperv2","version":"2.0.0","branding":{"site_name":"Avtix Game Panel","accent_color":"#6366f1"}},"site":{"name":"Avtix Game Panel","description":"Premium Game Server Hosting"},"license":{"tier":"ultimate","status":"valid","community":false},"features":{"all":true}}';
+    }
     location = /api/client/theme/hyperv2/info {
         default_type application/json;
         return 200 '{"theme":{"name":"hyperv2","version":"2.0.0","branding":{"site_name":"Avtix Game Panel"}},"features":{"all":true},"license":{"tier":"ultimate","status":"valid","community":false}}';
+    }
+    location = /api/client/theme/hyperv2/version {
+        default_type application/json;
+        return 200 '{"version":"2.0.0","latest":"2.0.0","update_available":false}';
     }
 
     # ═══ STAFF-REQUEST INTERCEPT ═══
